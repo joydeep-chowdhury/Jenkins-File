@@ -1,18 +1,18 @@
 pipeline {
     agent none
     environment {
-        BUILD_USER= currentBuild.getBuildCauses()
+          wrap([$class: 'BuildUser']) {
+                          BUILD_USER="${BUILD_USER}"
+                          BUILD_USER_ID="${BUILD_USER_ID}"
+                          BUILD_USER_EMAIL="${BUILD_USER_EMAIL}"
+                      }
     }
     stages {
         stage('Build') {
             agent any
             steps {
                 echo 'compiling... by ${BUILD_USER}'
-                 wrap([$class: 'BuildUser']) {
-                          echo "${BUILD_USER}"
-                          echo "${BUILD_USER_ID}"
-                          echo "${BUILD_USER_EMAIL}"
-                      }
+              
             }
         }
         stage('Test') {
