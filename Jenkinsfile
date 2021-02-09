@@ -1,8 +1,9 @@
-environment {
-        EMAIL_TO = 'joydeepc101@gmail.com;www.joycool@gmail.com'
-    }
+
 pipeline {
     agent none
+    environment {
+        EMAIL_TO = 'joydeepc101@gmail.com;www.joycool@gmail.com'
+    }
     stages {
         stage('Build') {
             agent any
