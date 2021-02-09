@@ -8,6 +8,11 @@ pipeline {
             agent any
             steps {
                 echo 'compiling... by ${BUILD_USER}'
+                 wrap([$class: 'BuildUser']) {
+                          echo "${BUILD_USER}"
+                          echo "${BUILD_USER_ID}"
+                          echo "${BUILD_USER_EMAIL}"
+                      }
             }
         }
         stage('Test') {
