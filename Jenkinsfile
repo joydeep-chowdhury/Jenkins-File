@@ -22,7 +22,7 @@ pipeline {
                      def approvalInput
                      try
                      {
-                         approvalInput = input(id: 'Approval 1', message: 'Production Deployment Approval' , parameters: [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm if you agree with this ?']])
+                         approvalInput = input(id: 'Approval 1', message: 'Production Deployment Approval' , parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm if you agree with this ?']])
                      }
                      catch(err)
                     {
