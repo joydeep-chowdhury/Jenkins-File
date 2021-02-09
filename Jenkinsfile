@@ -43,8 +43,6 @@ def getBuildUserId()
         {
         jobUserId = "${BUILD_USER_ID}"
         }
-    def buildUserCause = currentBuild.getRawBuild().getCause(hudson.model.Cause.UserIdCause)
-    echo ''+buildUserCause
     return jobUserId
 }
 def getBuildEmail()
