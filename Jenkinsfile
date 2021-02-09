@@ -1,17 +1,10 @@
 pipeline {
     agent none
-    environment {
-          wrap([$class: 'BuildUser']) {
-                          BUILD_USER="${BUILD_USER}"
-                          BUILD_USER_ID="${BUILD_USER_ID}"
-                          BUILD_USER_EMAIL="${BUILD_USER_EMAIL}"
-                      }
-    }
     stages {
         stage('Build') {
             agent any
             steps {
-                echo 'compiling... by ${BUILD_USER}'
+                echo 'compiling... by '+getBuildUserId()
               
             }
         }
@@ -41,4 +34,32 @@ pipeline {
             }
         }
     }
+}
+
+def getBuildUserId()
+{
+    def jobUserId
+    wrap([$class: 'BuildUser']) 
+        {
+        jobUserId = "${BUILD_USER_ID}"
+        }
+    return jobUserId
+}
+def getBuildEmail()
+{
+     def jobUserEmail
+    wrap([$class: 'BuildUser']) 
+        {
+        jobUserEmail = "${BUILD_USER_EMAIL}"
+        }
+    return jobUserEmail
+}
+def getBuildUser()
+{
+     def jobUser
+    wrap([$class: 'BuildUser']) 
+        {
+        jobUser = "${BUILD_USER}"
+        }
+    return jobUser
 }
