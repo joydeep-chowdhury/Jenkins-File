@@ -12,7 +12,7 @@ pipeline {
             agent any
             steps {
                 echo 'testing... by ${BUILD_USER} '
-                echo env.BUILD_URL
+                echo env.JOB_URL
             }
         }
         stage('Approval') {
