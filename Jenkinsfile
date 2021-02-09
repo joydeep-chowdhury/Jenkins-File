@@ -19,19 +19,10 @@ pipeline {
             agent any
             steps {
                 script {
-                     def approvalInput
-                     try
-                     {
-                         approvalInput = input(id: 'Approval 1', message: 'Production Deployment Approval' , parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm if you agree with this ?']])
-                     }
-                     catch(err)
-                    {
-                        echo ""+err
-                        def user=err.getCauses()[0].getUser()
-                        approvalInput=false
-                        echo "Disapproved by: [{$user}] "
-                    }
-                   }
+              timeout(time: 10, unit: 'MINUTES') {
+                input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+              }
+            }
             }
         }
         stage('Deploy') {
