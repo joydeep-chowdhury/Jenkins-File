@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                echo 'compiling... by '+getBuildUserId()+'  '+User.current().getId()
+                echo 'compiling... by '+getBuildUserId()
               
             }
         }
