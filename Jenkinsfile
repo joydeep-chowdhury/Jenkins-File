@@ -7,13 +7,13 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                echo 'compiling... by ${cause.userName}'
+                echo 'compiling... by ${user}'
             }
         }
         stage('Test') {
             agent any
             steps {
-                echo 'testing... by ${cause.userName}'
+                echo 'testing... by ${user}'
             }
         }
         stage('Approval') {
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication'){
-                    echo 'Deploying... by ${cause.userName}'
+                    echo 'Deploying... by ${user}'
                 }
             }
         }
