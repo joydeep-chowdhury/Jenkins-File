@@ -26,7 +26,10 @@ pipeline {
                      }
                      catch(err)
                     {
-                     echo ""+err
+                        echo ""+err
+                        def user=err.getCauses()[0].getUser()
+                        approvalInput=false
+                        echo "Disapproved by: [{$user}] "
                     }
                    }
             }
