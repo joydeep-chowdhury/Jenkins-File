@@ -1,16 +1,19 @@
 pipeline {
     agent none
+    environment {
+        BUILD_USER= currentBuild.getBuildCauses()
+    }
     stages {
         stage('Build') {
             agent any
             steps {
-                echo 'compiling...'
+                echo 'compiling... by ${cause.userName}'
             }
         }
         stage('Test') {
             agent any
             steps {
-                echo 'testing...'
+                echo 'testing... by ${cause.userName}'
             }
         }
         stage('Approval') {
@@ -28,7 +31,7 @@ pipeline {
             steps {
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication'){
-                    echo 'Deploying...'
+                    echo 'Deploying... by ${cause.userName}'
                 }
             }
         }
