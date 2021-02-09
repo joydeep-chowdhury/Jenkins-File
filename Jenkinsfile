@@ -30,7 +30,7 @@ pipeline {
             steps {
                 // uses https://plugins.jenkins.io/lockable-resources
                 lock(resource: 'deployApplication'){
-                    echo 'Deploying... by ${BUILD_USER}'
+                    echo 'Deploying... by '+getBuildUserId()
                 }
             }
         }
