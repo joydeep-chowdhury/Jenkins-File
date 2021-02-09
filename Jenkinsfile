@@ -11,7 +11,8 @@ pipeline {
         stage('Test') {
             agent any
             steps {
-                echo 'testing... by ${BUILD_USER}'
+                echo 'testing... by ${BUILD_USER} '
+                echo env.BUILD_URL
             }
         }
         stage('Approval') {
