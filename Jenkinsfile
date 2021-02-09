@@ -1,3 +1,6 @@
+environment {
+        EMAIL_TO = 'joydeepc101@gmail.com;www.joycool@gmail.com'
+    }
 pipeline {
     agent none
     stages {
@@ -20,6 +23,9 @@ pipeline {
             agent any
             steps {
                 script {
+                emailext body: 'Check console output at $BUILD_URL to view the results. \n\n ${CHANGES} \n\n -------------------------------------------------- \n${BUILD_LOG, maxLines=100, escapeHtml=false}', 
+                    to: "${EMAIL_TO}", 
+                    subject: 'Build failed in Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
               timeout(time: 10, unit: 'MINUTES') {
                 input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
               }
