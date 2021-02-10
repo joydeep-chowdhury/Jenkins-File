@@ -24,9 +24,6 @@ pipeline {
             agent any
             steps {
                 script {
-                emailext body: 'Check console output at $BUILD_URL to view the results. \n\n ${CHANGES} \n\n -------------------------------------------------- \n${BUILD_LOG, maxLines=100, escapeHtml=false}', 
-                    to: "${EMAIL_TO}", 
-                    subject: 'Build failed in Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
                  def builduser
                  wrap([$class: 'BuildUser'])
                     {
@@ -34,7 +31,25 @@ pipeline {
                     }
                  echo builduser
               timeout(time: 10, unit: 'MINUTES') {
-                input(id: "Deploy Gate", message: "Deploy $JOB_NAME ?", ok: 'Deploy')
+                
+                   approvalMap = input (
+                        id: 'userInput', 
+                        message: "Approve build started by "+builduser,
+                        ok: 'Approve',
+                        submitter: '',
+                        submitterParameter: 'APPROVER',
+                        parameters: [[
+                            $class: 'StringParameterDefinition', 
+                            defaultValue: '30',
+                            description: 'extend validity by N days', 
+                            name: 'DAYS_TO_EXTEND']]
+                        )
+                        def adddays = "${approvalMap['DAYS_TO_EXTEND']}".toInteger()
+                        def approver_name = "${approvalMap['APPROVER']}".toUpperCase()
+                        echo  "Add days "+adddays+" Approver name: "+approver_name
+                       }
+                  
+                  
               }
             }
             }
