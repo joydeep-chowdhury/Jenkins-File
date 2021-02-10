@@ -15,7 +15,7 @@ pipeline {
         stage('Test') {
             agent any
             steps {
-                echo 'testing... by ${BUILD_USER} '
+                echo 'testing... by '+getBuildUser()
                 echo env.JOB_URL
             }
         }
